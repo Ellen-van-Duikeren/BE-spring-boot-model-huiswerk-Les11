@@ -31,20 +31,12 @@ public class TelevisionController {
         return ResponseEntity.created(uri).body("Television saved");
     }
 
-    @GetMapping("/pricesUnder")
-    public ResponseEntity<Iterable<Television>> getTelevisionsUnderPrice(@RequestParam double price) {
-        return ResponseEntity.ok(repos.findByPriceLessThan(price));
-    }
-
-    @GetMapping("/byBrand")
-    public ResponseEntity<Iterable<Television>> getTelevisionsByBrand(@RequestParam String brand) {
-        return ResponseEntity.ok(repos.findByBrand(brand));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Television> updateTelevision(@PathVariable long id, @RequestBody Television television) {
+        // eerst een optional aanmaken want je weet nog niet of dit id bestaat
         Optional<Television> updateTelevision = repos.findById(id);
         if (updateTelevision.isPresent()) {
+            //als de id bestaat ga je de optional bewaren in een echte variabele
             Television television1 = updateTelevision.get();
             television1.setName(television.getName());
             repos.save(television1);
@@ -64,6 +56,16 @@ public class TelevisionController {
             repos.delete(television1);
             return ResponseEntity.ok("Television deleted");
         }
+    }
+
+    @GetMapping("/pricesUnder")
+    public ResponseEntity<Iterable<Television>> getTelevisionsUnderPrice(@RequestParam double price) {
+        return ResponseEntity.ok(repos.findByPriceLessThan(price));
+    }
+
+    @GetMapping("/byBrand")
+    public ResponseEntity<Iterable<Television>> getTelevisionsByBrand(@RequestParam String brand) {
+        return ResponseEntity.ok(repos.findByBrand(brand));
     }
 }
 
