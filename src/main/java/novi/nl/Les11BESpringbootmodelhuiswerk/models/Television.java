@@ -3,12 +3,14 @@ package novi.nl.Les11BESpringbootmodelhuiswerk.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="televisions")
+@Table(name = "televisions")
 
 public class Television {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String type;
     private String brand;
     private String name;
@@ -54,12 +56,12 @@ public class Television {
     }
 
 
-//    alle getters en setters
-    public Long getId() {
+    //    alle getters en setters
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
