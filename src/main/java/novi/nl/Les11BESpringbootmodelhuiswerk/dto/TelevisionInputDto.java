@@ -1,59 +1,30 @@
-package novi.nl.Les11BESpringbootmodelhuiswerk.models;
+package novi.nl.Les11BESpringbootmodelhuiswerk.dto;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "televisions")
-
-public class Television {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String type;
-    private String brand;
-    private String name;
-    private Double price;
-    private Integer availableSize;
-    private Integer refreshRate;
-    private String screenType;
-    private String screenQuality;
-    private Boolean smartTv;
-    private Boolean wifi;
-    private Boolean voiceControl;
-    private Boolean hdr;
-    private Boolean bluetooth;
-    private Boolean ambiLight;
-    private Integer originalStock;
-    private Integer sold;
-
-    // default constructor
-    public Television() {
-    }
-
-    // constructor
-    public Television(Long id, String type, String brand, String name, Double price, Integer availableSize, Integer refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.id = id;
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
-
-    public Long getId() {
-        return id;
-    }
+public class TelevisionInputDto {
+    @NotBlank
+    public String type;
+    public String brand;
+    @NotBlank
+    @Size(min = 4, max = 30)
+    public String name;
+    @PositiveOrZero
+    public Double price;
+    public Integer availableSize;
+    public Integer refreshRate;
+    public String screenType;
+    public String screenQuality;
+    public Boolean smartTv;
+    public Boolean wifi;
+    public Boolean voiceControl;
+    public Boolean hdr;
+    public Boolean bluetooth;
+    public Boolean ambiLight;
+    public Integer originalStock;
+    public Integer sold;
 
     public String getType() {
         return type;
@@ -183,3 +154,5 @@ public class Television {
         this.sold = sold;
     }
 }
+
+

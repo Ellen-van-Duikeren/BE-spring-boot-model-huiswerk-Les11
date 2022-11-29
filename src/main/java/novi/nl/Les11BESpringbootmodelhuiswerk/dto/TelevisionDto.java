@@ -1,14 +1,12 @@
-package novi.nl.Les11BESpringbootmodelhuiswerk.models;
+package novi.nl.Les11BESpringbootmodelhuiswerk.dto;
 
-import javax.persistence.*;
+import novi.nl.Les11BESpringbootmodelhuiswerk.models.Television;
 
-@Entity
-@Table(name = "televisions")
+// we hebben in deze opdracht een tvdto en tvinputdto om te laten zien dat dit kan maar ze zijn beide in dit geval hetzelfde. Je kan meerdere dto's gebruiken, bijv een dto waarin je alleen je password verifieert en niet alle usergegevens in staan en dus een dto met je usergegevens.
 
-public class Television {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TelevisionDto {
+    //id wordt automatisch gegenereerd, dus hoeft hier niet
+    //    public long id;
     private String type;
     private String brand;
     private String name;
@@ -26,35 +24,7 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-    // default constructor
-    public Television() {
-    }
-
-    // constructor
-    public Television(Long id, String type, String brand, String name, Double price, Integer availableSize, Integer refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.id = id;
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
+    // getters & setters...............................................
     public String getType() {
         return type;
     }
