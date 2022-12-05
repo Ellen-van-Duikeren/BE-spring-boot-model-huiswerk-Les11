@@ -1,7 +1,7 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.controllers;
 
 import novi.nl.Les11BESpringbootmodelhuiswerk.dto.TelevisionDto;
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.TelevisionInputDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.TelevisionInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.services.TelevisionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,21 +18,21 @@ import static novi.nl.Les11BESpringbootmodelhuiswerk.util.Utilities.getErrorStri
 @RestController
 @RequestMapping("/televisions")
 public class TelevisionController {
-    private final TelevisionService service;
+    private final TelevisionService televisionService;
     public TelevisionController(TelevisionService televisionService) {
-        this.service = televisionService;
+        this.televisionService = televisionService;
     }
 
 
     @GetMapping("")
     public ResponseEntity<List<TelevisionDto>> getAllTelevisions() {
-        return ResponseEntity.ok(service.getAllTelevisions());
+        return ResponseEntity.ok(televisionService.getAllTelevisions());
     }
 
     // in de hw klas gemaakt
     @GetMapping("/{id}")
     public ResponseEntity<TelevisionDto> getTelevision(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getTelevision(id));
+        return ResponseEntity.ok(televisionService.getTelevision(id));
     }
 
     // in de les gemaakt
@@ -42,7 +42,7 @@ public class TelevisionController {
             String errorString = getErrorString(br);
             return new ResponseEntity<>(errorString, HttpStatus.BAD_REQUEST);
         } else {
-            Long createdId = service.createTelevision(televisionInputDto);
+            Long createdId = televisionService.createTelevision(televisionInputDto);
             URI uri = URI.create(ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/televisions/" + createdId)
@@ -50,6 +50,7 @@ public class TelevisionController {
             return ResponseEntity.created(uri).body("Television created.");
         }
     }
+
 
 //    cf in de les
 //    @PutMapping("/{id}")
@@ -71,14 +72,26 @@ public class TelevisionController {
     // onderstaande geeft een TelevisionDto terug ipv String
     @PutMapping("/{id}")
     public ResponseEntity<TelevisionDto> updateTelevision(@PathVariable Long id, @Valid @RequestBody TelevisionInputDto televisionInputDto) {
-        TelevisionDto televisionDto = service.updatedTelevision(id, televisionInputDto);
+        TelevisionDto televisionDto = televisionService.updatedTelevision(id, televisionInputDto);
         return ResponseEntity.ok().body(televisionDto);
     }
 
-    // in hw klas gemaakt
+    @PutMapping("/{id}/remotecontroller/{remoteControllerId}")
+    public void assignRemoteControllerToTelevision(@PathVariable Long id, @PathVariable Long remoteControllerId) {
+        televisionService.assignRemoteControllerToTelevision(id, remoteControllerId);
+    }
+
+//    @PutMapping("/{id}/cimodule/{ciModuleId}")
+//    public void assignCIModuleToTelevision(@PathVariable Long id, @PathVariable Long ciModuleId) {
+//        televisionService.assignCIModuleToTelevision(id, ciModuleId);
+//    }
+
+
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTelevision(@PathVariable Long id) {
-        service.deleteById(id);
+        televisionService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

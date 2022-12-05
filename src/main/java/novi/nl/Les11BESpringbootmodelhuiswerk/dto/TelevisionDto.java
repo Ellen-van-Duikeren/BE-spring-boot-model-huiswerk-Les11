@@ -1,12 +1,16 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.dto;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.models.Television;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import novi.nl.Les11BESpringbootmodelhuiswerk.models.CIModule;
+import novi.nl.Les11BESpringbootmodelhuiswerk.models.RemoteController;
+import novi.nl.Les11BESpringbootmodelhuiswerk.models.WallBracket;
+
+import java.util.List;
 
 // we hebben in deze opdracht een tvdto en tvinputdto om te laten zien dat dit kan maar ze zijn beide in dit geval hetzelfde. Je kan meerdere dto's gebruiken, bijv een dto waarin je alleen je password verifieert en niet alle usergegevens in staan en dus een dto met je usergegevens.
 
 public class TelevisionDto {
-    //id wordt automatisch gegenereerd, dus hoeft hier niet
-    //    public long id;
     private String type;
     private String brand;
     private String name;
@@ -23,8 +27,25 @@ public class TelevisionDto {
     private Boolean ambiLight;
     private Integer originalStock;
     private Integer sold;
+    @JsonIncludeProperties("id")
+    private RemoteController remotecontroller;
+
+//    @JsonIncludeProperties("id")
+//    private CIModule cimodule;
+
+    @JsonIncludeProperties("id")
+    private List<CIModule> cimodules;
 
     // getters & setters...............................................
+
+//    public List<CIModule> getCimodules() {
+//        return cimodules;
+//    }
+//
+//    public void setCimodules(List<CIModule> cimodules) {
+//        this.cimodules = cimodules;
+//    }
+
     public String getType() {
         return type;
     }
@@ -89,7 +110,7 @@ public class TelevisionDto {
         this.screenQuality = screenQuality;
     }
 
-    public Boolean isSmartTv() {
+    public Boolean getSmartTv() {
         return smartTv;
     }
 
@@ -97,7 +118,7 @@ public class TelevisionDto {
         this.smartTv = smartTv;
     }
 
-    public Boolean isWifi() {
+    public Boolean getWifi() {
         return wifi;
     }
 
@@ -105,7 +126,7 @@ public class TelevisionDto {
         this.wifi = wifi;
     }
 
-    public Boolean isVoiceControl() {
+    public Boolean getVoiceControl() {
         return voiceControl;
     }
 
@@ -113,7 +134,7 @@ public class TelevisionDto {
         this.voiceControl = voiceControl;
     }
 
-    public Boolean isHdr() {
+    public Boolean getHdr() {
         return hdr;
     }
 
@@ -121,7 +142,7 @@ public class TelevisionDto {
         this.hdr = hdr;
     }
 
-    public Boolean isBluetooth() {
+    public Boolean getBluetooth() {
         return bluetooth;
     }
 
@@ -129,7 +150,7 @@ public class TelevisionDto {
         this.bluetooth = bluetooth;
     }
 
-    public Boolean isAmbiLight() {
+    public Boolean getAmbiLight() {
         return ambiLight;
     }
 
@@ -152,4 +173,28 @@ public class TelevisionDto {
     public void setSold(Integer sold) {
         this.sold = sold;
     }
+
+    public RemoteController getRemotecontroller() {
+        return remotecontroller;
+    }
+
+    public void setRemotecontroller(RemoteController remotecontroller) {
+        this.remotecontroller = remotecontroller;
+    }
+
+    public List<CIModule> getCimodules() {
+        return cimodules;
+    }
+
+    public void setCimodules(List<CIModule> cimodules) {
+        this.cimodules = cimodules;
+    }
+
+    //    public List<WallBracket> getWallBrackets() {
+//        return wallBrackets;
+//    }
+//
+//    public void setWallBrackets(List<WallBracket> wallBrackets) {
+//        this.wallBrackets = wallBrackets;
+//    }
 }

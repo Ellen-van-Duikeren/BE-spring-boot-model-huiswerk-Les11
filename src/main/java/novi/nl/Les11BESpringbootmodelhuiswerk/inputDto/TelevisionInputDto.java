@@ -1,4 +1,4 @@
-package novi.nl.Les11BESpringbootmodelhuiswerk.dto;
+package novi.nl.Les11BESpringbootmodelhuiswerk.inputDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
@@ -25,6 +25,11 @@ public class TelevisionInputDto {
     public Boolean ambiLight;
     public Integer originalStock;
     public Integer sold;
+
+
+
+
+    // getters & setters...........................................................................................
 
     public String getType() {
         return type;

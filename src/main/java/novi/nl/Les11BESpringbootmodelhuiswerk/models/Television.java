@@ -1,10 +1,16 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import novi.nl.Les11BESpringbootmodelhuiswerk.exceptions.RecordNotFoundException;
+import novi.nl.Les11BESpringbootmodelhuiswerk.repositories.TelevisionRepository;
+import novi.nl.Les11BESpringbootmodelhuiswerk.repositories.WallBracketRepository;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "televisions")
-
 public class Television {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,33 +32,41 @@ public class Television {
     private Integer originalStock;
     private Integer sold;
 
-    // default constructor
-    public Television() {
+
+    //    Een OneToOne relatie tussen Television en RemoteController
+    @OneToOne
+    private RemoteController remotecontroller;
+
+    //    Een ManyToOne relatie tussen Television en CI-Module
+//    @ManyToOne
+//    private CIModule cimodule;
+
+//    Een OneToMany relatie tussen Television en CI-Module
+    @OneToMany(mappedBy = "television")
+    @JsonIgnore
+    private List<CIModule> ciModules;
+
+    //    Een ManyToMany relatie tussen Television en WallBracket
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "television_id"), inverseJoinColumns = @JoinColumn(name = "wallbracket_id"), name = "television_wallbrackets")
+    private List<WallBracket> wallbrackets;
+
+
+    // getters & setters
+    public List<CIModule> getCiModules() {
+        return ciModules;
     }
 
-    // constructor
-    public Television(Long id, String type, String brand, String name, Double price, Integer availableSize, Integer refreshRate, String screenType, String screenQuality, Boolean smartTv, Boolean wifi, Boolean voiceControl, Boolean hdr, Boolean bluetooth, Boolean ambiLight, Integer originalStock, Integer sold) {
-        this.id = id;
-        this.type = type;
-        this.brand = brand;
-        this.name = name;
-        this.price = price;
-        this.availableSize = availableSize;
-        this.refreshRate = refreshRate;
-        this.screenType = screenType;
-        this.screenQuality = screenQuality;
-        this.smartTv = smartTv;
-        this.wifi = wifi;
-        this.voiceControl = voiceControl;
-        this.hdr = hdr;
-        this.bluetooth = bluetooth;
-        this.ambiLight = ambiLight;
-        this.originalStock = originalStock;
-        this.sold = sold;
+    public void setCiModules(List<CIModule> ciModules) {
+        this.ciModules = ciModules;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -119,7 +133,7 @@ public class Television {
         this.screenQuality = screenQuality;
     }
 
-    public Boolean isSmartTv() {
+    public Boolean getSmartTv() {
         return smartTv;
     }
 
@@ -127,7 +141,7 @@ public class Television {
         this.smartTv = smartTv;
     }
 
-    public Boolean isWifi() {
+    public Boolean getWifi() {
         return wifi;
     }
 
@@ -135,7 +149,7 @@ public class Television {
         this.wifi = wifi;
     }
 
-    public Boolean isVoiceControl() {
+    public Boolean getVoiceControl() {
         return voiceControl;
     }
 
@@ -143,7 +157,7 @@ public class Television {
         this.voiceControl = voiceControl;
     }
 
-    public Boolean isHdr() {
+    public Boolean getHdr() {
         return hdr;
     }
 
@@ -151,7 +165,7 @@ public class Television {
         this.hdr = hdr;
     }
 
-    public Boolean isBluetooth() {
+    public Boolean getBluetooth() {
         return bluetooth;
     }
 
@@ -159,7 +173,7 @@ public class Television {
         this.bluetooth = bluetooth;
     }
 
-    public Boolean isAmbiLight() {
+    public Boolean getAmbiLight() {
         return ambiLight;
     }
 
@@ -181,5 +195,31 @@ public class Television {
 
     public void setSold(Integer sold) {
         this.sold = sold;
+    }
+
+    public RemoteController getRemotecontroller() {
+        return remotecontroller;
+    }
+
+    public void setRemotecontroller(RemoteController remotecontroller) {
+        this.remotecontroller = remotecontroller;
+    }
+
+//    public CIModule getCimodule() {
+//        return cimodule;
+//    }
+//
+//    public void setCimodule(CIModule cimodule) {
+//        this.cimodule = cimodule;
+//    }
+
+
+
+    public List<WallBracket> getWallbrackets() {
+        return wallbrackets;
+    }
+
+    public void setWallbrackets(List<WallBracket> wallbrackets) {
+        this.wallbrackets = wallbrackets;
     }
 }
