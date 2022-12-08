@@ -177,6 +177,9 @@ public class TelevisionService {
         if (television.getCiModules() != null) {
             televisionOutputDto.setCimodules(television.getCiModules());
         }
+        if (television.getWallbrackets() != null) {
+            televisionOutputDto.setWallbrackets(television.getWallbrackets());
+        }
         televisionOutputDto.setType(television.getType());
         televisionOutputDto.setBrand(television.getBrand());
         televisionOutputDto.setName(television.getName());
