@@ -21,8 +21,6 @@ public class WallBracket {
 
 
     //    getters & setters ...................................
-
-
     public Long getId() {
         return id;
     }

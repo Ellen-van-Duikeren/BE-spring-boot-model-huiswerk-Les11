@@ -1,6 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.services;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.WallBracketDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.outputDto.WallBracketOutputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.exceptions.RecordNotFoundException;
 import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.WallBracketInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.models.WallBracket;
@@ -21,18 +21,18 @@ public class WallBracketService {
     }
 
     // GetMapping, functie voor het ophalen van alle WallBrackets
-    public List<WallBracketDto> getAllWallBrackets() {
+    public List<WallBracketOutputDto> getAllWallBrackets() {
         List<WallBracket> wallbrackets = repository.findAll();
-        ArrayList<WallBracketDto> wallbracketDtos = new ArrayList<>();
+        ArrayList<WallBracketOutputDto> wallbracketOutputDtos = new ArrayList<>();
         for (WallBracket wallbracket : wallbrackets) {
-            WallBracketDto wallbracketDto = transfertoDto(wallbracket);
-            wallbracketDtos.add(wallbracketDto);
+            WallBracketOutputDto wallbracketOutputDto = transfertoDto(wallbracket);
+            wallbracketOutputDtos.add(wallbracketOutputDto);
         }
-        return wallbracketDtos;
+        return wallbracketOutputDtos;
     }
 
     // GetMapping by id, functie voor het ophalen van 1 WallBracket, cf hw klas
-    public WallBracketDto getWallBracket(Long id) {
+    public WallBracketOutputDto getWallBracket(Long id) {
         Optional<WallBracket> optionalWallBracket = repository.findById(id);
         if (!repository.existsById(id)) {
             throw new RecordNotFoundException("No wallbracket found with id: " + id + ".");
@@ -52,7 +52,7 @@ public class WallBracketService {
 
 
     // functie voor het updaten van een televisie waarbij een dto wordt teruggegeven
-    public WallBracketDto updatedWallBracket(Long id, WallBracketInputDto wallbracketInputDto) {
+    public WallBracketOutputDto updatedWallBracket(Long id, WallBracketInputDto wallbracketInputDto) {
         Optional<WallBracket> optionalWallBracket = repository.findById(id);
         if (repository.existsById(id)) {
             WallBracket wallbracketToUpdate = optionalWallBracket.get();
@@ -89,13 +89,13 @@ public class WallBracketService {
     }
 
     // helper method from WallBracket to Dto
-    private WallBracketDto transfertoDto(WallBracket wallbracket) {
-        WallBracketDto wallbracketDto = new WallBracketDto();
-        wallbracketDto.setAdjustable(wallbracket.getAdjustable());
-        wallbracketDto.setName(wallbracket.getName());
-        wallbracketDto.setPrice(wallbracket.getPrice());
-        wallbracketDto.setSize(wallbracket.getSize());
-        return wallbracketDto;
+    private WallBracketOutputDto transfertoDto(WallBracket wallbracket) {
+        WallBracketOutputDto wallbracketOutputDto = new WallBracketOutputDto();
+        wallbracketOutputDto.setAdjustable(wallbracket.getAdjustable());
+        wallbracketOutputDto.setName(wallbracket.getName());
+        wallbracketOutputDto.setPrice(wallbracket.getPrice());
+        wallbracketOutputDto.setSize(wallbracket.getSize());
+        return wallbracketOutputDto;
     }
 
     //helper method from Dto to WallBracket

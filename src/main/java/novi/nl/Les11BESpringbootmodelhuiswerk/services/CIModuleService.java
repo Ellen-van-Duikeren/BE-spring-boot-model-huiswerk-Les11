@@ -1,6 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.services;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.CIModuleDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.outputDto.CIModuleOutputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.exceptions.RecordNotFoundException;
 import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.CIModuleInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.models.CIModule;
@@ -24,18 +24,18 @@ public class CIModuleService {
     }
 
     // GetMapping, functie voor het ophalen van alle CIModules
-    public List<CIModuleDto> getAllCIModules() {
+    public List<CIModuleOutputDto> getAllCIModules() {
         List<CIModule> cimodules = ciModuleRepository.findAll();
-        ArrayList<CIModuleDto> cimoduleDtos = new ArrayList<>();
+        ArrayList<CIModuleOutputDto> cimoduleOutputDtos = new ArrayList<>();
         for (CIModule cimodule : cimodules) {
-            CIModuleDto cimoduleDto = transfertoDto(cimodule);
-            cimoduleDtos.add(cimoduleDto);
+            CIModuleOutputDto cimoduleOutputDto = transfertoDto(cimodule);
+            cimoduleOutputDtos.add(cimoduleOutputDto);
         }
-        return cimoduleDtos;
+        return cimoduleOutputDtos;
     }
 
     // GetMapping by id, functie voor het ophalen van 1 CIModule, cf hw klas
-    public CIModuleDto getCIModule(Long id) {
+    public CIModuleOutputDto getCIModule(Long id) {
         Optional<CIModule> optionalCIModule = ciModuleRepository.findById(id);
         if (!ciModuleRepository.existsById(id)) {
             throw new RecordNotFoundException("No cimodule found with id: " + id + ".");
@@ -55,7 +55,7 @@ public class CIModuleService {
 
 
     // functie voor het updaten van een televisie waarbij een dto wordt teruggegeven
-    public CIModuleDto updatedCIModule(Long id, CIModuleInputDto cimoduleInputDto) {
+    public CIModuleOutputDto updatedCIModule(Long id, CIModuleInputDto cimoduleInputDto) {
         Optional<CIModule> optionalCIModule = ciModuleRepository.findById(id);
         if (ciModuleRepository.existsById(id)) {
             CIModule cimoduleToUpdate = optionalCIModule.get();
@@ -104,15 +104,15 @@ public class CIModuleService {
 
 
     // helper method from CIModule to Dto
-    private CIModuleDto transfertoDto(CIModule cimodule) {
-        CIModuleDto cimoduleDto = new CIModuleDto();
-        cimoduleDto.setType(cimodule.getType());
-        cimoduleDto.setName(cimodule.getName());
-        cimoduleDto.setPrice(cimodule.getPrice());
+    private CIModuleOutputDto transfertoDto(CIModule cimodule) {
+        CIModuleOutputDto cimoduleOutputDto = new CIModuleOutputDto();
+        cimoduleOutputDto.setType(cimodule.getType());
+        cimoduleOutputDto.setName(cimodule.getName());
+        cimoduleOutputDto.setPrice(cimodule.getPrice());
         if(cimodule.getTelevision() != null) {
-            cimoduleDto.setTelevision(cimodule.getTelevision());
+            cimoduleOutputDto.setTelevision(cimodule.getTelevision());
         }
-        return cimoduleDto;
+        return cimoduleOutputDto;
     }
 
     //helper method from Dto to CIModule

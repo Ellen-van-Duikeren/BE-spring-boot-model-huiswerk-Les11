@@ -1,12 +1,11 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.services;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.TelevisionDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.models.WallBracket;
+import novi.nl.Les11BESpringbootmodelhuiswerk.outputDto.TelevisionOutputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.TelevisionInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.exceptions.RecordNotFoundException;
-import novi.nl.Les11BESpringbootmodelhuiswerk.models.CIModule;
 import novi.nl.Les11BESpringbootmodelhuiswerk.models.RemoteController;
 import novi.nl.Les11BESpringbootmodelhuiswerk.models.Television;
-import novi.nl.Les11BESpringbootmodelhuiswerk.models.WallBracket;
 import novi.nl.Les11BESpringbootmodelhuiswerk.repositories.CIModuleRepository;
 import novi.nl.Les11BESpringbootmodelhuiswerk.repositories.RemoteControllerRepository;
 import novi.nl.Les11BESpringbootmodelhuiswerk.repositories.TelevisionRepository;
@@ -33,18 +32,19 @@ public class TelevisionService {
 
 
     // GetMapping, functie voor het ophalen van alle Televisions
-    public List<TelevisionDto> getAllTelevisions() {
+    public List<TelevisionOutputDto> getAllTelevisions() {
         List<Television> televisions = televisionRepository.findAll();
-        ArrayList<TelevisionDto> televisionDtos = new ArrayList<>();
+        ArrayList<TelevisionOutputDto> televisionOutputDtos = new ArrayList<>();
         for (Television television : televisions) {
-            TelevisionDto televisionDto = transfertoDto(television);
-            televisionDtos.add(televisionDto);
+            TelevisionOutputDto televisionOutputDto = transfertoDto(television);
+            televisionOutputDtos.add(televisionOutputDto);
         }
-        return televisionDtos;
+        return televisionOutputDtos;
     }
 
+
     // GetMapping by id, functie voor het ophalen van 1 Television, cf hw klas
-    public TelevisionDto getTelevision(Long id) {
+    public TelevisionOutputDto getTelevision(Long id) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
         if (!televisionRepository.existsById(id)) {
             throw new RecordNotFoundException("No television found with id: " + id + ".");
@@ -54,6 +54,7 @@ public class TelevisionService {
         }
     }
 
+
     //     PostMapping, functie voor het opslaan van 1 Television, in de les gemaakt
     public Long createTelevision(TelevisionInputDto televisionInputDto) {
         Television newTelevision = new Television();
@@ -62,72 +63,9 @@ public class TelevisionService {
         return savedTelevision.getId();
     }
 
-//    cf in de les
-//    bij PutMapping, functie voor het updaten van 1 Television
-//    public Long updateTelevision(Long id, TelevisionInputDto televisionInputDto) {
-//        Optional<Television> optionalTelevision = repository.findById(id);
-//        if (repository.existsById(id)) {
-//            Television televisionToUpdate = optionalTelevision.get();
-//
-//            if (televisionInputDto.getAvailableSize() != null) {
-//                televisionToUpdate.setAvailableSize(televisionInputDto.getAvailableSize());
-//            }
-//            if (televisionInputDto.isAmbiLight() != null) {
-//                televisionToUpdate.setAmbiLight(televisionInputDto.isAmbiLight());
-//            }
-//            if (televisionInputDto.isBluetooth() != null) {
-//                televisionToUpdate.setBluetooth(televisionInputDto.isBluetooth());
-//            }
-//            if (televisionInputDto.getBrand() != null) {
-//                televisionToUpdate.setBrand(televisionInputDto.getBrand());
-//            }
-//            if (televisionInputDto.isHdr() != null ) {
-//                televisionToUpdate.setHdr(televisionInputDto.isHdr());
-//            }
-//            if (televisionInputDto.getName() != null) {
-//                televisionToUpdate.setName(televisionInputDto.getName());
-//            }
-//            if (televisionInputDto.getOriginalStock() != null) {
-//                televisionToUpdate.setOriginalStock(televisionInputDto.getOriginalStock());
-//            }
-//            if (televisionInputDto.getPrice() != null) {
-//                televisionToUpdate.setPrice(televisionInputDto.getPrice());
-//            }
-//            if (televisionInputDto.getRefreshRate() != null) {
-//                televisionToUpdate.setRefreshRate(televisionInputDto.getRefreshRate());
-//            }
-//            if (televisionInputDto.getScreenQuality() != null) {
-//                televisionToUpdate.setScreenQuality(televisionInputDto.getScreenQuality());
-//            }
-//            if (televisionInputDto.getScreenType() != null) {
-//                televisionToUpdate.setScreenType(televisionInputDto.getScreenType());
-//            }
-//            if (televisionInputDto.isSmartTv() != null) {
-//                televisionToUpdate.setSmartTv(televisionInputDto.isSmartTv());
-//            }
-//            if (televisionInputDto.getSold() != null) {
-//                televisionToUpdate.setSold(televisionInputDto.getSold());
-//            }
-//            if (televisionInputDto.getType() != null) {
-//                televisionToUpdate.setType(televisionInputDto.getType());
-//            }
-//            if (televisionInputDto.isVoiceControl() != null) {
-//                televisionToUpdate.setVoiceControl(televisionInputDto.isVoiceControl());
-//            }
-//            if (televisionInputDto.isWifi() != null) {
-//                televisionToUpdate.setWifi(televisionInputDto.isWifi());
-//            }
-//
-//            Television savedTelevision = repository.save(televisionToUpdate);
-//            return savedTelevision.getId();
-//        } else {
-//            throw new RecordNotFoundException("No television with id " + id);
-//        }
-//    }
-
 
     // functie voor het updaten van een televisie waarbij een dto wordt teruggegeven
-    public TelevisionDto updatedTelevision(Long id, TelevisionInputDto televisionInputDto) {
+    public TelevisionOutputDto updatedTelevision(Long id, TelevisionInputDto televisionInputDto) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
         if (televisionRepository.existsById(id)) {
             Television televisionToUpdate = optionalTelevision.get();
@@ -135,17 +73,17 @@ public class TelevisionService {
             if (televisionInputDto.getAvailableSize() != null) {
                 televisionToUpdate.setAvailableSize(televisionInputDto.getAvailableSize());
             }
-            if (televisionInputDto.isAmbiLight() != null) {
-                televisionToUpdate.setAmbiLight(televisionInputDto.isAmbiLight());
+            if (televisionInputDto.getAmbiLight() != null) {
+                televisionToUpdate.setAmbiLight(televisionInputDto.getAmbiLight());
             }
-            if (televisionInputDto.isBluetooth() != null) {
-                televisionToUpdate.setBluetooth(televisionInputDto.isBluetooth());
+            if (televisionInputDto.getBluetooth() != null) {
+                televisionToUpdate.setBluetooth(televisionInputDto.getBluetooth());
             }
             if (televisionInputDto.getBrand() != null) {
                 televisionToUpdate.setBrand(televisionInputDto.getBrand());
             }
-            if (televisionInputDto.isHdr() != null) {
-                televisionToUpdate.setHdr(televisionInputDto.isHdr());
+            if (televisionInputDto.getHdr() != null) {
+                televisionToUpdate.setHdr(televisionInputDto.getHdr());
             }
             if (televisionInputDto.getName() != null) {
                 televisionToUpdate.setName(televisionInputDto.getName());
@@ -165,8 +103,8 @@ public class TelevisionService {
             if (televisionInputDto.getScreenType() != null) {
                 televisionToUpdate.setScreenType(televisionInputDto.getScreenType());
             }
-            if (televisionInputDto.isSmartTv() != null) {
-                televisionToUpdate.setSmartTv(televisionInputDto.isSmartTv());
+            if (televisionInputDto.getSmartTv() != null) {
+                televisionToUpdate.setSmartTv(televisionInputDto.getSmartTv());
             }
             if (televisionInputDto.getSold() != null) {
                 televisionToUpdate.setSold(televisionInputDto.getSold());
@@ -174,11 +112,11 @@ public class TelevisionService {
             if (televisionInputDto.getType() != null) {
                 televisionToUpdate.setType(televisionInputDto.getType());
             }
-            if (televisionInputDto.isVoiceControl() != null) {
-                televisionToUpdate.setVoiceControl(televisionInputDto.isVoiceControl());
+            if (televisionInputDto.getVoiceControl() != null) {
+                televisionToUpdate.setVoiceControl(televisionInputDto.getVoiceControl());
             }
-            if (televisionInputDto.isWifi() != null) {
-                televisionToUpdate.setWifi(televisionInputDto.isWifi());
+            if (televisionInputDto.getWifi() != null) {
+                televisionToUpdate.setWifi(televisionInputDto.getWifi());
             }
 
             Television savedTelevision = televisionRepository.save(televisionToUpdate);
@@ -187,6 +125,7 @@ public class TelevisionService {
             throw new RecordNotFoundException("No television with id " + id);
         }
     }
+
 
     // bij DeleteMapping, functie voor het verwijderen van 1 Television, gemaakt in de les
     public String deleteById(Long id) {
@@ -200,6 +139,7 @@ public class TelevisionService {
         }
     }
 
+
     public void assignRemoteControllerToTelevision(Long id, Long remoteControllerId) {
         Optional<Television> optionalTelevision = televisionRepository.findById(id);
         Optional<RemoteController> optionalRemotecontroller = remoteControllerRepository.findById(remoteControllerId);
@@ -212,6 +152,7 @@ public class TelevisionService {
             throw new RecordNotFoundException();
         }
     }
+
 
 //    public void assignCIModuleToTelevision(Long id, Long CIModuleId) {
 //        Optional<Television> optionalTelevision = televisionRepository.findById(id);
@@ -228,31 +169,31 @@ public class TelevisionService {
 
 
     // helper method from Television to Dto
-    private TelevisionDto transfertoDto(Television television) {
-        TelevisionDto televisionDto = new TelevisionDto();
-        televisionDto.setType(television.getType());
-        televisionDto.setBrand(television.getBrand());
-        televisionDto.setName(television.getName());
-        televisionDto.setPrice(television.getPrice());
-        televisionDto.setAvailableSize(television.getAvailableSize());
-        televisionDto.setRefreshRate(television.getRefreshRate());
-        televisionDto.setScreenType(television.getScreenType());
-        televisionDto.setScreenQuality(television.getScreenQuality());
-        televisionDto.setSmartTv(television.getSmartTv());
-        televisionDto.setWifi(television.getWifi());
-        televisionDto.setVoiceControl(television.getVoiceControl());
-        televisionDto.setHdr(television.getHdr());
-        televisionDto.setBluetooth(television.getBluetooth());
-        televisionDto.setAmbiLight(television.getAmbiLight());
-        televisionDto.setOriginalStock(television.getOriginalStock());
-        televisionDto.setSold(television.getSold());
-        if(television.getRemotecontroller() != null) {
-            televisionDto.setRemotecontroller(television.getRemotecontroller());
+    private TelevisionOutputDto transfertoDto(Television television) {
+        TelevisionOutputDto televisionOutputDto = new TelevisionOutputDto();
+        if (television.getRemotecontroller() != null) {
+            televisionOutputDto.setRemotecontroller(television.getRemotecontroller());
         }
-        if(television.getCiModules() != null) {
-            televisionDto.setCimodules(television.getCiModules());
+        if (television.getCiModules() != null) {
+            televisionOutputDto.setCimodules(television.getCiModules());
         }
-        return televisionDto;
+        televisionOutputDto.setType(television.getType());
+        televisionOutputDto.setBrand(television.getBrand());
+        televisionOutputDto.setName(television.getName());
+        televisionOutputDto.setPrice(television.getPrice());
+        televisionOutputDto.setAvailableSize(television.getAvailableSize());
+        televisionOutputDto.setRefreshRate(television.getRefreshRate());
+        televisionOutputDto.setScreenType(television.getScreenType());
+        televisionOutputDto.setScreenQuality(television.getScreenQuality());
+        televisionOutputDto.setSmartTv(television.getSmartTv());
+        televisionOutputDto.setWifi(television.getWifi());
+        televisionOutputDto.setVoiceControl(television.getVoiceControl());
+        televisionOutputDto.setHdr(television.getHdr());
+        televisionOutputDto.setBluetooth(television.getBluetooth());
+        televisionOutputDto.setAmbiLight(television.getAmbiLight());
+        televisionOutputDto.setOriginalStock(television.getOriginalStock());
+        televisionOutputDto.setSold(television.getSold());
+        return televisionOutputDto;
     }
 
     //helper method from Dto to Television
@@ -260,22 +201,46 @@ public class TelevisionService {
         Television television = new Television();
         television.setType(televisionInputDto.getType());
         television.setName(televisionInputDto.getName());
-        television.setHdr(televisionInputDto.isHdr());
+        television.setHdr(televisionInputDto.getHdr());
         television.setAvailableSize(televisionInputDto.getAvailableSize());
         television.setOriginalStock(televisionInputDto.getOriginalStock());
-        television.setAmbiLight(televisionInputDto.isAmbiLight());
-        television.setBluetooth(televisionInputDto.isBluetooth());
+        television.setAmbiLight(televisionInputDto.getAmbiLight());
+        television.setBluetooth(televisionInputDto.getBluetooth());
         television.setBrand(televisionInputDto.getBrand());
         television.setPrice(televisionInputDto.getPrice());
         television.setRefreshRate(televisionInputDto.getRefreshRate());
         television.setScreenQuality(televisionInputDto.getScreenQuality());
         television.setScreenType(televisionInputDto.getScreenType());
-        television.setSmartTv(televisionInputDto.isSmartTv());
+        television.setSmartTv(televisionInputDto.getSmartTv());
         television.setSold(televisionInputDto.getSold());
         television.setType(televisionInputDto.getType());
-        television.setVoiceControl(televisionInputDto.isVoiceControl());
-        television.setWifi(televisionInputDto.isWifi());
+        television.setVoiceControl(televisionInputDto.getVoiceControl());
+        television.setWifi(televisionInputDto.getWifi());
         return television;
+    }
+
+    public void assignWallBracketToTelevision(Long id, Long wallBracketId) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
+        Optional<WallBracket> optionalWallBracket = wallBracketRepository.findById(wallBracketId);
+
+        if (optionalTelevision.isPresent() && optionalWallBracket.isPresent()) {
+            Television television = optionalTelevision.get();
+            WallBracket wallBracket = optionalWallBracket.get();
+
+            List<WallBracket> wallBracketlist = television.getWallbrackets();
+            wallBracketlist.add(wallBracket);
+            television.setWallbrackets(wallBracketlist);
+            televisionRepository.save(television);
+
+            List<Television> televisionlist = wallBracket.getTelevisions();
+            televisionlist.add(television);
+            wallBracket.setTelevisions(televisionlist);
+            wallBracketRepository.save(wallBracket);
+
+        } else {
+            throw new RecordNotFoundException();
+
+        }
     }
 }
 

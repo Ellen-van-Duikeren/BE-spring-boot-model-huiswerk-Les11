@@ -46,9 +46,9 @@ public class Television {
     @JsonIgnore
     private List<CIModule> ciModules;
 
-    //    Een ManyToMany relatie tussen Television en WallBracket
+//        Een ManyToMany relatie tussen Television en WallBracket
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "television_id"), inverseJoinColumns = @JoinColumn(name = "wallbracket_id"), name = "television_wallbrackets")
+    @JoinTable(joinColumns = @JoinColumn(name = "television_id"), inverseJoinColumns = @JoinColumn(name = "wallbracket_id"))
     private List<WallBracket> wallbrackets;
 
 

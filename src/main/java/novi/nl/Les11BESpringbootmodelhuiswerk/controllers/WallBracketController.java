@@ -1,6 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.controllers;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.WallBracketDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.outputDto.WallBracketOutputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.WallBracketInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.services.WallBracketService;
 import org.springframework.http.HttpStatus;
@@ -26,13 +26,13 @@ public class WallBracketController {
 
 
     @GetMapping("")
-    public ResponseEntity<List<WallBracketDto>> getAllWallBrackets() {
+    public ResponseEntity<List<WallBracketOutputDto>> getAllWallBrackets() {
         return ResponseEntity.ok(service.getAllWallBrackets());
     }
 
     // in de hw klas gemaakt
     @GetMapping("/{id}")
-    public ResponseEntity<WallBracketDto> getWallBracket(@PathVariable Long id) {
+    public ResponseEntity<WallBracketOutputDto> getWallBracket(@PathVariable Long id) {
         return ResponseEntity.ok(service.getWallBracket(id));
     }
 
@@ -55,9 +55,9 @@ public class WallBracketController {
 
     // onderstaande geeft een WallBracketDto terug ipv String
     @PutMapping("/{id}")
-    public ResponseEntity<WallBracketDto> updateWallBracket(@PathVariable Long id, @Valid @RequestBody WallBracketInputDto wallBracketInputDto) {
-        WallBracketDto wallBracketDto = service.updatedWallBracket(id, wallBracketInputDto);
-        return ResponseEntity.ok().body(wallBracketDto);
+    public ResponseEntity<WallBracketOutputDto> updateWallBracket(@PathVariable Long id, @Valid @RequestBody WallBracketInputDto wallBracketInputDto) {
+        WallBracketOutputDto wallBracketOutputDto = service.updatedWallBracket(id, wallBracketInputDto);
+        return ResponseEntity.ok().body(wallBracketOutputDto);
     }
 
     // in hw klas gemaakt

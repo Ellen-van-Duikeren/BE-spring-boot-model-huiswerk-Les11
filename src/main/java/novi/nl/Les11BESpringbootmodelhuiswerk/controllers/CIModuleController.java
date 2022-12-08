@@ -1,6 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.controllers;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.CIModuleDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.outputDto.CIModuleOutputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.CIModuleInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.services.CIModuleService;
 import org.springframework.http.HttpStatus;
@@ -26,13 +26,13 @@ public class CIModuleController {
 
 
     @GetMapping("")
-    public ResponseEntity<List<CIModuleDto>> getAllCIModules() {
+    public ResponseEntity<List<CIModuleOutputDto>> getAllCIModules() {
         return ResponseEntity.ok(service.getAllCIModules());
     }
 
     // in de hw klas gemaakt
     @GetMapping("/{id}")
-    public ResponseEntity<CIModuleDto> getCIModule(@PathVariable Long id) {
+    public ResponseEntity<CIModuleOutputDto> getCIModule(@PathVariable Long id) {
         return ResponseEntity.ok(service.getCIModule(id));
     }
 
@@ -54,9 +54,9 @@ public class CIModuleController {
 
     // onderstaande geeft een CIModuleDto terug ipv String
     @PutMapping("/{id}")
-    public ResponseEntity<CIModuleDto> updateCIModule(@PathVariable Long id, @Valid @RequestBody CIModuleInputDto cimoduleInputDto) {
-        CIModuleDto cimoduleDto = service.updatedCIModule(id, cimoduleInputDto);
-        return ResponseEntity.ok().body(cimoduleDto);
+    public ResponseEntity<CIModuleOutputDto> updateCIModule(@PathVariable Long id, @Valid @RequestBody CIModuleInputDto cimoduleInputDto) {
+        CIModuleOutputDto cimoduleOutputDto = service.updatedCIModule(id, cimoduleInputDto);
+        return ResponseEntity.ok().body(cimoduleOutputDto);
     }
 
     // in hw klas gemaakt

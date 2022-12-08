@@ -1,6 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.controllers;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.RemoteControllerDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.outputDto.RemoteControllerOutputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.RemoteControllerInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.services.RemoteControllerService;
 import org.springframework.http.HttpStatus;
@@ -26,13 +26,13 @@ public class RemoteControllerController {
 
 
     @GetMapping("")
-    public ResponseEntity<List<RemoteControllerDto>> getAllRemoteControllers() {
+    public ResponseEntity<List<RemoteControllerOutputDto>> getAllRemoteControllers() {
         return ResponseEntity.ok(service.getAllRemoteControllers());
     }
 
     // in de hw klas gemaakt
     @GetMapping("/{id}")
-    public ResponseEntity<RemoteControllerDto> getRemoteController(@PathVariable Long id) {
+    public ResponseEntity<RemoteControllerOutputDto> getRemoteController(@PathVariable Long id) {
         return ResponseEntity.ok(service.getRemoteController(id));
     }
 
@@ -55,9 +55,9 @@ public class RemoteControllerController {
 
     // onderstaande geeft een RemoteControllerDto terug ipv String
     @PutMapping("/{id}")
-    public ResponseEntity<RemoteControllerDto> updateRemoteController(@PathVariable Long id, @Valid @RequestBody RemoteControllerInputDto remotecontrollerInputDto) {
-        RemoteControllerDto remotecontrollerDto = service.updatedRemoteController(id, remotecontrollerInputDto);
-        return ResponseEntity.ok().body(remotecontrollerDto);
+    public ResponseEntity<RemoteControllerOutputDto> updateRemoteController(@PathVariable Long id, @Valid @RequestBody RemoteControllerInputDto remotecontrollerInputDto) {
+        RemoteControllerOutputDto remotecontrollerOutputDto = service.updatedRemoteController(id, remotecontrollerInputDto);
+        return ResponseEntity.ok().body(remotecontrollerOutputDto);
     }
 
     // in hw klas gemaakt

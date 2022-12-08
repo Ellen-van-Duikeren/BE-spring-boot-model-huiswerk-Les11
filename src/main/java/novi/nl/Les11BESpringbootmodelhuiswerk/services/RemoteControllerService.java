@@ -1,6 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.services;
 
-import novi.nl.Les11BESpringbootmodelhuiswerk.dto.RemoteControllerDto;
+import novi.nl.Les11BESpringbootmodelhuiswerk.outputDto.RemoteControllerOutputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.exceptions.RecordNotFoundException;
 import novi.nl.Les11BESpringbootmodelhuiswerk.inputDto.RemoteControllerInputDto;
 import novi.nl.Les11BESpringbootmodelhuiswerk.models.RemoteController;
@@ -24,18 +24,18 @@ public class RemoteControllerService {
     }
 
     // GetMapping, functie voor het ophalen van alle RemoteControllers
-    public List<RemoteControllerDto> getAllRemoteControllers() {
+    public List<RemoteControllerOutputDto> getAllRemoteControllers() {
         List<RemoteController> remotecontrollers = repository.findAll();
-        ArrayList<RemoteControllerDto> remotecontrollerDtos = new ArrayList<>();
+        ArrayList<RemoteControllerOutputDto> remotecontrollerOutputDtos = new ArrayList<>();
         for (RemoteController remotecontroller : remotecontrollers) {
-            RemoteControllerDto remotecontrollerDto = transfertoDto(remotecontroller);
-            remotecontrollerDtos.add(remotecontrollerDto);
+            RemoteControllerOutputDto remotecontrollerOutputDto = transfertoDto(remotecontroller);
+            remotecontrollerOutputDtos.add(remotecontrollerOutputDto);
         }
-        return remotecontrollerDtos;
+        return remotecontrollerOutputDtos;
     }
 
     // GetMapping by id, functie voor het ophalen van 1 RemoteController, cf hw klas
-    public RemoteControllerDto getRemoteController(Long id) {
+    public RemoteControllerOutputDto getRemoteController(Long id) {
         Optional<RemoteController> optionalRemoteController = repository.findById(id);
         if (!repository.existsById(id)) {
             throw new RecordNotFoundException("No remotecontroller found with id: " + id + ".");
@@ -55,7 +55,7 @@ public class RemoteControllerService {
 
 
     // functie voor het updaten van een televisie waarbij een dto wordt teruggegeven
-    public RemoteControllerDto updatedRemoteController(Long id, RemoteControllerInputDto remotecontrollerInputDto) {
+    public RemoteControllerOutputDto updatedRemoteController(Long id, RemoteControllerInputDto remotecontrollerInputDto) {
         Optional<RemoteController> optionalRemoteController = repository.findById(id);
         if (repository.existsById(id)) {
             RemoteController remotecontrollerToUpdate = optionalRemoteController.get();
@@ -98,18 +98,18 @@ public class RemoteControllerService {
     }
 
     // helper method from RemoteController to Dto
-    private RemoteControllerDto transfertoDto(RemoteController remotecontroller) {
-        RemoteControllerDto remotecontrollerDto = new RemoteControllerDto();
-        remotecontrollerDto.setBatteryType(remotecontroller.getBatteryType());
-        remotecontrollerDto.setBrand(remotecontroller.getBrand());
-        remotecontrollerDto.setName(remotecontroller.getName());
-        remotecontrollerDto.setPrice(remotecontroller.getPrice());
-        remotecontrollerDto.setCompatibleWith(remotecontroller.getCompatibleWith());
-        remotecontrollerDto.setOriginalStock(remotecontroller.getOriginalStock());
-        remotecontrollerDto.setOriginalStock(remotecontroller.getOriginalStock());
+    private RemoteControllerOutputDto transfertoDto(RemoteController remotecontroller) {
+        RemoteControllerOutputDto remotecontrollerOutputDto = new RemoteControllerOutputDto();
+        remotecontrollerOutputDto.setBatteryType(remotecontroller.getBatteryType());
+        remotecontrollerOutputDto.setBrand(remotecontroller.getBrand());
+        remotecontrollerOutputDto.setName(remotecontroller.getName());
+        remotecontrollerOutputDto.setPrice(remotecontroller.getPrice());
+        remotecontrollerOutputDto.setCompatibleWith(remotecontroller.getCompatibleWith());
+        remotecontrollerOutputDto.setOriginalStock(remotecontroller.getOriginalStock());
+        remotecontrollerOutputDto.setOriginalStock(remotecontroller.getOriginalStock());
 
 
-        return remotecontrollerDto;
+        return remotecontrollerOutputDto;
     }
 
     //helper method from Dto to RemoteController
