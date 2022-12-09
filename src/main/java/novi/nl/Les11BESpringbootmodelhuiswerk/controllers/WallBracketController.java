@@ -18,32 +18,32 @@ import static novi.nl.Les11BESpringbootmodelhuiswerk.util.Utilities.getErrorStri
 @RestController
 @RequestMapping("/wallbrackets")
 public class WallBracketController {
-    private final WallBracketService service;
+    private final WallBracketService wallBracketService;
 
     public WallBracketController(WallBracketService wallBracketService) {
-        this.service = wallBracketService;
+        this.wallBracketService = wallBracketService;
     }
 
 
     @GetMapping("")
     public ResponseEntity<List<WallBracketOutputDto>> getAllWallBrackets() {
-        return ResponseEntity.ok(service.getAllWallBrackets());
+        return ResponseEntity.ok(wallBracketService.getAllWallBrackets());
     }
 
-    // in de hw klas gemaakt
+
     @GetMapping("/{id}")
     public ResponseEntity<WallBracketOutputDto> getWallBracket(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getWallBracket(id));
+        return ResponseEntity.ok(wallBracketService.getWallBracket(id));
     }
 
-    // in de les gemaakt
+
     @PostMapping("")
     public ResponseEntity<String> createWallBracket(@Valid @RequestBody WallBracketInputDto wallBracketInputDto, BindingResult br) {
         if (br.hasErrors()) {
             String errorString = getErrorString(br);
             return new ResponseEntity<>(errorString, HttpStatus.BAD_REQUEST);
         } else {
-            Long createdId = service.createWallBracket(wallBracketInputDto);
+            Long createdId = wallBracketService.createWallBracket(wallBracketInputDto);
             URI uri = URI.create(ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/wallBrackets/" + createdId)
@@ -53,17 +53,22 @@ public class WallBracketController {
     }
 
 
-    // onderstaande geeft een WallBracketDto terug ipv String
+
     @PutMapping("/{id}")
     public ResponseEntity<WallBracketOutputDto> updateWallBracket(@PathVariable Long id, @Valid @RequestBody WallBracketInputDto wallBracketInputDto) {
-        WallBracketOutputDto wallBracketOutputDto = service.updatedWallBracket(id, wallBracketInputDto);
+        WallBracketOutputDto wallBracketOutputDto = wallBracketService.updatedWallBracket(id, wallBracketInputDto);
         return ResponseEntity.ok().body(wallBracketOutputDto);
     }
 
-    // in hw klas gemaakt
+//    @PutMapping("/{id}/television/{televisionId}")
+//    public ResponseEntity<String> assignTelevisionToWallbracket(@PathVariable Long id, @PathVariable Long televisionId) {
+//        wallBracketService.assignTelevisionToWallbracket(id, televisionId);
+//        return ResponseEntity.ok("succeeded");
+//    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteWallBracket(@PathVariable Long id) {
-        service.deleteById(id);
+        wallBracketService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

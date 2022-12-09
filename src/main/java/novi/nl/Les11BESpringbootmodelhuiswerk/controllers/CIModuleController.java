@@ -24,19 +24,16 @@ public class CIModuleController {
         this.service = cimoduleService;
     }
 
-
     @GetMapping("")
     public ResponseEntity<List<CIModuleOutputDto>> getAllCIModules() {
         return ResponseEntity.ok(service.getAllCIModules());
     }
 
-    // in de hw klas gemaakt
     @GetMapping("/{id}")
     public ResponseEntity<CIModuleOutputDto> getCIModule(@PathVariable Long id) {
         return ResponseEntity.ok(service.getCIModule(id));
     }
 
-    // in de les gemaakt
     @PostMapping("")
     public ResponseEntity<String> createCIModule(@Valid @RequestBody CIModuleInputDto cimoduleInputDto, BindingResult br) {
         if (br.hasErrors()) {
@@ -52,21 +49,18 @@ public class CIModuleController {
         }
     }
 
-    // onderstaande geeft een CIModuleDto terug ipv String
     @PutMapping("/{id}")
     public ResponseEntity<CIModuleOutputDto> updateCIModule(@PathVariable Long id, @Valid @RequestBody CIModuleInputDto cimoduleInputDto) {
         CIModuleOutputDto cimoduleOutputDto = service.updatedCIModule(id, cimoduleInputDto);
         return ResponseEntity.ok().body(cimoduleOutputDto);
     }
 
-    // in hw klas gemaakt
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCIModule(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    // Assign Television to CIModule
         @PutMapping("/{id}/television/{televisionId}")
     public void assignTelevisionToCIModule(@PathVariable Long id, @PathVariable Long televisionId) {
         CIModuleService.assignTelevisionToCIModule(id, televisionId);

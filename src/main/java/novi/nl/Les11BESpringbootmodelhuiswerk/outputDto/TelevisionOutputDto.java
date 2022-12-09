@@ -1,5 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.outputDto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +41,7 @@ public class TelevisionOutputDto {
     @JsonIncludeProperties("id")
     private List<CIModule> cimodules;
 
-    @JsonIncludeProperties("id")
+    @JsonIgnoreProperties("televisions")
     private List<WallBracket> wallbrackets;
 
 }

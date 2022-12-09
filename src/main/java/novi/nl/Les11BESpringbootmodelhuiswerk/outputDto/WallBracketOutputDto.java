@@ -1,5 +1,6 @@
 package novi.nl.Les11BESpringbootmodelhuiswerk.outputDto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import novi.nl.Les11BESpringbootmodelhuiswerk.models.Television;
@@ -14,7 +15,8 @@ public class WallBracketOutputDto {
     private Boolean adjustable;
     private String name;
     private Double price;
-    private List<Television> televisions;
+
+    private List<TelevisionOutputDto> televisionOutputDtos;
 
 
 }

@@ -52,7 +52,6 @@ public class TelevisionController {
         }
     }
 
-
 //    cf in de les
 //    @PutMapping("/{id}")
 //    public ResponseEntity<String> updateTelevision(@PathVariable Long id, @Valid @RequestBody TelevisionInputDto televisionInputDto, BindingResult br) {
@@ -90,7 +89,7 @@ public class TelevisionController {
     @PutMapping("/{id}/wallbracket/{wallbracketId}")
     public ResponseEntity<String> assignWallBracketToTelevision(@PathVariable Long id, @PathVariable Long wallbracketId) {
         televisionService.assignWallBracketToTelevision(id, wallbracketId);
-        return ResponseEntity.ok("succes");
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

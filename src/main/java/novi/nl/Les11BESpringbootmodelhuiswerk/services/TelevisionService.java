@@ -168,14 +168,42 @@ public class TelevisionService {
 //    }
 
 
+    public void assignWallBracketToTelevision(Long id, Long wallBracketId) {
+        Optional<Television> optionalTelevision = televisionRepository.findById(id);
+        Optional<WallBracket> optionalWallBracket = wallBracketRepository.findById(wallBracketId);
+
+        if (optionalTelevision.isPresent() && optionalWallBracket.isPresent()) {
+            Television television = optionalTelevision.get();
+            WallBracket wallBracket = optionalWallBracket.get();
+
+            // met list, niet besproken, werkte wel
+            // List<WallBracket> wallBracketlist = television.getWallbrackets();
+            // wallBracketlist.add(wallBracket);
+            // television.setWallbrackets(wallBracketlist);
+
+            television.addWallBracket(wallBracket);
+            televisionRepository.save(television);
+
+            List<Television> televisionlist = wallBracket.getTelevisions();
+            televisionlist.add(television);
+            wallBracket.setTelevisions(televisionlist);
+            wallBracketRepository.save(wallBracket);
+
+        } else {
+            throw new RecordNotFoundException("Television or wallbracket not found");
+        }
+    }
+
+
+//    helper methods................................................................................
     // helper method from Television to Dto
-    private TelevisionOutputDto transfertoDto(Television television) {
+    public static TelevisionOutputDto transfertoDto(Television television) {
         TelevisionOutputDto televisionOutputDto = new TelevisionOutputDto();
         if (television.getRemotecontroller() != null) {
             televisionOutputDto.setRemotecontroller(television.getRemotecontroller());
         }
-        if (television.getCiModules() != null) {
-            televisionOutputDto.setCimodules(television.getCiModules());
+        if (television.getCimodules() != null) {
+            televisionOutputDto.setCimodules(television.getCimodules());
         }
         if (television.getWallbrackets() != null) {
             televisionOutputDto.setWallbrackets(television.getWallbrackets());
@@ -202,6 +230,9 @@ public class TelevisionService {
     //helper method from Dto to Television
     public Television transfertoTelevision(TelevisionInputDto televisionInputDto) {
         Television television = new Television();
+        if (television.getWallbrackets() != null) {
+            television.setWallbrackets(televisionInputDto.getWallbrackets());
+        }
         television.setType(televisionInputDto.getType());
         television.setName(televisionInputDto.getName());
         television.setHdr(televisionInputDto.getHdr());
@@ -220,30 +251,6 @@ public class TelevisionService {
         television.setVoiceControl(televisionInputDto.getVoiceControl());
         television.setWifi(televisionInputDto.getWifi());
         return television;
-    }
-
-    public void assignWallBracketToTelevision(Long id, Long wallBracketId) {
-        Optional<Television> optionalTelevision = televisionRepository.findById(id);
-        Optional<WallBracket> optionalWallBracket = wallBracketRepository.findById(wallBracketId);
-
-        if (optionalTelevision.isPresent() && optionalWallBracket.isPresent()) {
-            Television television = optionalTelevision.get();
-            WallBracket wallBracket = optionalWallBracket.get();
-
-            List<WallBracket> wallBracketlist = television.getWallbrackets();
-            wallBracketlist.add(wallBracket);
-            television.setWallbrackets(wallBracketlist);
-            televisionRepository.save(television);
-
-            List<Television> televisionlist = wallBracket.getTelevisions();
-            televisionlist.add(television);
-            wallBracket.setTelevisions(televisionlist);
-            wallBracketRepository.save(wallBracket);
-
-        } else {
-            throw new RecordNotFoundException();
-
-        }
     }
 }
 
